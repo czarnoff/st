@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "mono:pixelsize=14:antialias=true:autohint=true";
+static char font[] = "mono:pixelsize=11:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -82,8 +82,9 @@ static char termname[] = "st-256color";
  */
 static unsigned int tabspaces = 8;
 
-/* bg opacity */
+/* bg opacity 00=> clear ;ff=> opaque */
 static const int alpha = 0xdd;
+//static const int alpha = 0xff;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -134,7 +135,7 @@ static const char *altcolorname[] = {
  * foreground, background, cursor, reverse cursor
  */
 static unsigned int defaultfg = 12;
-static unsigned int defaultbg = 257;
+static unsigned int defaultbg = 16;
 static unsigned int defaultcs = 14;
 static unsigned int defaultrcs = 15;
 
@@ -145,7 +146,7 @@ static unsigned int defaultrcs = 15;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 6;
 
 /*
  * Default columns and rows numbers
@@ -202,6 +203,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
 	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
   	{ MODKEY,           	XK_Tab,		swapcolors,	{.i =  0} },
+  	{ MODKEY,           	XK_a,		swapalpha,	{.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,            	XK_k,  		kscrollup,      {.i = 1} },

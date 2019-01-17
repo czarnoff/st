@@ -84,7 +84,7 @@ char *argv0;
 				(t1.tv_nsec-t2.tv_nsec)/1E6)
 #define MODBIT(x, set, bit)	((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
-#define USE_ARGB (alpha != OPAQUE && opt_embed == NULL)
+#define USE_ARGB (alpha != OPAQUE && useAlpha && opt_embed == NULL)
 
 #define TRUECOLOR(r,g,b)	(1 << 24 | (r) << 16 | (g) << 8 | (b))
 #define IS_TRUECOL(x)		(1 << 24 & (x))
@@ -356,6 +356,7 @@ static void kscrolldown(const Arg *);
 static void kscrollup(const Arg *);
 static void numlock(const Arg *);
 static void swapcolors(const Arg *);
+static void swapalpha(const Arg *);
 static void selpaste(const Arg *);
 static void xzoom(const Arg *);
 static void xzoomabs(const Arg *);
@@ -566,6 +567,7 @@ static char *opt_title = NULL;
 static int oldbutton   = 3; /* button event on startup: 3 = release */
 
 static int usealtcolors = 0; /* 1 to use alternate palette */
+static int useAlpha = 1; /* 1 to use alpha */
 
 static char *usedfont = NULL;
 static double usedfontsize = 0;
@@ -4167,6 +4169,7 @@ xdrawcursor(void)
 		switch (xw.cursor) {
 		case 7: /* st extension: snowman */
 			utf8decode("☃", &g.u, UTF_SIZ);
+			break;
 		case 0: /* Blinking Block */
 		case 1: /* Blinking Block (Default) */
 		case 2: /* Steady Block */
@@ -4369,6 +4372,14 @@ void
 swapcolors(const Arg *dummy)
 {
 	usealtcolors = !usealtcolors;
+	xloadcols();
+	redraw();
+}
+void
+swapalpha(const Arg *dummy)
+{
+    printf("%d", useAlpha);
+	useAlpha = !useAlpha;
 	xloadcols();
 	redraw();
 }
